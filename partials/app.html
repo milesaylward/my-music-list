@@ -1,0 +1,28 @@
+<div class='card search'>
+  <h1 class='search-headline'>My Favorite Music</h1>
+  <h4>Press space in search bar for full list.<br>Type artists' name/genre to filter results</h4>
+  <label class='search-label'>
+    <span *ngIf="query" [innerHTML]=" 'Search for: ' + query">
+    </span>
+  </label>
+  <input
+  class="search-input"
+  [(ngModel)]="query"
+  (input)="onSearchChange()"
+  placeholder="Search"
+  />
+</div>
+
+<ul class="artistlist cf"
+  *ngIf="query">
+  <li class="artistlist-item cf"
+      (click)="showArtist(item); query=''"
+      *ngFor="let item of (artists | search: query)">
+      <artist-item class="content" [artist]=item></artist-item>
+  </li>
+</ul>
+
+<artist-detail
+  *ngIf="currentArtist && query ===''"
+  [artist]="currentArtist"
+  ></artist-detail>
